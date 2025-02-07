@@ -1,4 +1,4 @@
-package org.example.finalproject.service.date;
+package org.example.finalproject.service;
 
 import org.example.finalproject.dto.stock.DateRangeDto;
 import org.example.finalproject.model.entity.Stock;
@@ -28,11 +28,11 @@ public class DatePreparationService {
         LocalDate firstDate = excludedDates.get(0);
         LocalDate lastDate = excludedDates.get(excludedDates.size() - 1);
 
-        if (startDate.isBefore(firstDate) && !isConsecutiveDays(startDate, firstDate)) {
+        if (startDate.isBefore(firstDate)) {
             dateRanges.add(new DateRangeDto(startDate, firstDate.minusDays(1)));
         }
 
-        if (endDate.isAfter(lastDate) && !isConsecutiveDays(endDate, lastDate)) {
+        if (endDate.isAfter(lastDate)) {
             dateRanges.add(new DateRangeDto(lastDate.plusDays(1), endDate));
         }
 

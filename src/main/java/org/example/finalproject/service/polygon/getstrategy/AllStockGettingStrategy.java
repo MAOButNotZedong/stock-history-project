@@ -1,4 +1,4 @@
-package org.example.finalproject.service.stock.strategy;
+package org.example.finalproject.service.polygon.getstrategy;
 
 import lombok.RequiredArgsConstructor;
 import org.example.finalproject.dto.stock.DateRangeDto;

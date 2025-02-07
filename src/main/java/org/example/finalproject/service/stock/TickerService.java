@@ -1,7 +1,7 @@
-package org.example.finalproject.service;
+package org.example.finalproject.service.stock;
 
 import lombok.RequiredArgsConstructor;
-import org.example.finalproject.dao.TickerDao;
+import org.example.finalproject.dao.TickerRepository;
 import org.example.finalproject.model.entity.Ticker;
 import org.springframework.stereotype.Service;
 
@@ -11,17 +11,24 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TickerService {
 
-    private final TickerDao tickerDao;
+    private final TickerRepository tickerRepository;
 
     public Optional<Ticker> getTicker(String ticker) {
-        return tickerDao.findByStockTicker(ticker);
-    }
-
-    public Ticker getStockHistory(String ticker) {
-        return tickerDao.getStockHistoryByTickerAndUserId(ticker, 1);
+        return tickerRepository.findByTickerSymbol(ticker);
     }
 
     public void save(Ticker ticker) {
-        tickerDao.save(ticker);
+        tickerRepository.save(ticker);
+    }
+
+    public Ticker saveAndGet(String tickerSymbol) {
+        Optional<Ticker> tickerFromDb = getTicker(tickerSymbol);
+        if (tickerFromDb.isPresent()) {
+            return tickerFromDb.get();
+        } else {
+            Ticker newTicker = new Ticker(tickerSymbol);
+            save(newTicker);
+            return newTicker;
+        }
     }
 }

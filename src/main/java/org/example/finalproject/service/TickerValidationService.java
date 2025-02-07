@@ -1,4 +1,4 @@
-package org.example.finalproject.service.validation;
+package org.example.finalproject.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.finalproject.exception.TickerNotFoundException;

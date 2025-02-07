@@ -1,10 +1,10 @@
-package org.example.finalproject.service.stock.strategy;
+package org.example.finalproject.service.polygon.getstrategy;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.example.finalproject.dto.stock.DateRangeDto;
 import org.example.finalproject.dto.stock.StockSaveRequestDto;
-import org.example.finalproject.service.date.DatePreparationService;
+import org.example.finalproject.service.DatePreparationService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -15,7 +15,7 @@ import java.util.List;
 public class StockGettingStrategySelector {
 
     private final static double PERCENTAGE_OF_EXISTING_STOCK = 0.5; // 50%
-    private final static int NUM_OF_RANGES = 2;
+    private final static int NUM_OF_RANGES = 3;
     private final List<StockGettingStrategy> stockGettingStrategies;
     private final DatePreparationService datePreparationService;
 

@@ -1,10 +1,10 @@
-package org.example.finalproject.service.stock.strategy;
+package org.example.finalproject.service.polygon.getstrategy;
 
 import lombok.RequiredArgsConstructor;
 import org.example.finalproject.dto.stock.DateRangeDto;
 import org.example.finalproject.dto.stock.PolygonResultDto;
 import org.example.finalproject.dto.stock.StockSaveRequestDto;
-import org.example.finalproject.service.date.DatePreparationService;
+import org.example.finalproject.service.DatePreparationService;
 import org.example.finalproject.service.polygon.IntegrationService;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
@@ -25,6 +25,7 @@ public class DefaultStockGettingStrategy implements StockGettingStrategy {
         List<DateRangeDto> searchingRangeDates = datePreparationService.cutDateRange(stock.getStartDate(), stock.getEndDate(), existingDates);
         PolygonResultDto fullResult = null;
         for (DateRangeDto dateRange : searchingRangeDates) {
+            System.out.println("dateRange: " + dateRange);
             PolygonResultDto result = integrationService.getStockByDateRange(stock.getTickerSymbol(), dateRange);
             if (result != null && result.getStocks() !=null && !result.getStocks().isEmpty()) {
                 if (fullResult == null) {

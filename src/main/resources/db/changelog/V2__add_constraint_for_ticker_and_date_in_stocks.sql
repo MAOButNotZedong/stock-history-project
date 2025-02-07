@@ -1,3 +1,2 @@
 ALTER TABLE stocks
-    ADD ticker_and_date VARCHAR(255),
-    ADD CONSTRAINT users_email_key
+    ADD CONSTRAINT stocks_ticker_id_and_date UNIQUE (ticker_id, date)

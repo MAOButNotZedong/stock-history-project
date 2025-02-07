@@ -1,11 +1,14 @@
 package org.example.finalproject.exception;
 
 
-import org.springframework.web.ErrorResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-public class EmailAlreadyExistsException extends RuntimeException{
-    public EmailAlreadyExistsException(){}
-    public EmailAlreadyExistsException(String message) {
+@ResponseStatus(value = HttpStatus.CONFLICT, reason = "User with email already exists")
+public class UserWithEmailAlreadyExistsException extends RuntimeException{
+
+    public UserWithEmailAlreadyExistsException(){}
+    public UserWithEmailAlreadyExistsException(String message) {
         super(message);
     }
 }

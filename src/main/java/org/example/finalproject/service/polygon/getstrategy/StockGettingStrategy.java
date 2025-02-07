@@ -1,4 +1,4 @@
-package org.example.finalproject.service.stock.strategy;
+package org.example.finalproject.service.polygon.getstrategy;
 
 import org.example.finalproject.dto.stock.PolygonResultDto;
 import org.example.finalproject.dto.stock.StockSaveRequestDto;

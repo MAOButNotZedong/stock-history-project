@@ -1,26 +1,41 @@
-package org.example.finalproject.dto;
+package org.example.finalproject.dto.user;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.example.finalproject.constants.ValidationConstants;
+import org.springframework.validation.annotation.Validated;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.SortedMap;
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Validated
+@Schema(description = "Dto для регистрации пользователя")
+public class UserRegistrationDto {
 
-public class UserRegistrationDto extends UserDto {
     @NotBlank
-    @Pattern(regexp = "^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
-    private String email;
-    public UserRegistrationDto(String username, String password, String email) {
-        super(username, password);
-        this.email = email;
-    }
+    @Size(min = ValidationConstants.MIN,
+            max = ValidationConstants.USERNAME_MAX_LENGTH)
+    @Pattern(regexp = ValidationConstants.USERNAME_PATTERN)
+    @Schema(example = "Name")
+    private String username;
 
-    public String getEmail() {
-        return email;
-    }
+    @NotBlank
+    @Size(min = ValidationConstants.PASSWORD_MIN_LENGTH,
+            max = ValidationConstants.PASSWORD_MAX_LENGTH)
+    @Pattern(regexp = ValidationConstants.PASSWORD_PATTERN)
+    @Schema(example = "1234")
+    private String password;
+
+    @NotBlank
+    @Size(min = ValidationConstants.MIN,
+            max = ValidationConstants.EMAIL_MAX_LENGTH)
+    @Pattern(regexp = ValidationConstants.EMAIL_PATTERN)
+    @Schema(example = "abcd@mail.com")
+    private String email;
+
 }

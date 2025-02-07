@@ -1,13 +1,11 @@
 package org.example.finalproject;
 
-import lombok.SneakyThrows;
 import org.example.finalproject.constants.EndPointPaths;
 import org.example.finalproject.constants.ExceptionConstants;
 import org.example.finalproject.dto.user.UserLoginDto;
 import org.example.finalproject.dto.user.UserRegistrationDto;
 import org.example.finalproject.model.entity.User;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -15,7 +13,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Optional;
 
-public class UserRestControllerTests extends PostgresDatabaseContainerForTests {
+public class UserRestControllerComponentTests extends BaseForComponentTests {
 
     @Test
     void registerUserWithEmptyStrings() throws Exception {
@@ -78,6 +76,7 @@ public class UserRestControllerTests extends PostgresDatabaseContainerForTests {
                     .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("al@gmail.com"))
                     .andExpect(MockMvcResultMatchers.jsonPath("$.password").value("1234"));
         }
+
         mockMvc.perform(
                         MockMvcRequestBuilders.post(EndPointPaths.API_USER_REGISTER)
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -94,6 +93,7 @@ public class UserRestControllerTests extends PostgresDatabaseContainerForTests {
                 MockMvcRequestBuilders.post(EndPointPaths.API_USER_REGISTER)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(registeringUser));
+
         UserLoginDto userLoginDto = new UserLoginDto("al@gmail.com", "1234");
         String loginUser = objectToJsonString(userLoginDto);
         mockMvc.perform(
@@ -122,10 +122,5 @@ public class UserRestControllerTests extends PostgresDatabaseContainerForTests {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.message").value(ExceptionConstants.EMAIL_OR_PASSWORD_NOT_VALID));
     }
 
-
-    @SneakyThrows
-    String objectToJsonString(Object object) {
-        return objectMapper.writeValueAsString(object);
-    }
 
 }

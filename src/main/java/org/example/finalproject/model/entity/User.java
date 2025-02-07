@@ -1,4 +1,4 @@
-package org.example.finalproject.model;
+package org.example.finalproject.model.entity;
 
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
@@ -10,9 +10,7 @@ import org.hibernate.annotations.NaturalId;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 
 @Data
@@ -20,9 +18,13 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "users")
+@Table(name = "users",
+uniqueConstraints = {@UniqueConstraint(name = User.UNIQUE_CONSTRAINT_NAME, columnNames = {"email"})})
 @Nonnull
 public class User {
+
+    public static final String UNIQUE_CONSTRAINT_NAME = "users_email_key";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -33,12 +35,12 @@ public class User {
 
     private String username;
     private String password;
-    private Boolean isDeleted;
+    private boolean isDeleted;
     private LocalDate lastLogin;
+
     @CreatedDate
     @Version
+    @Column(updatable = false)
     private Date created;
 
-    @OneToMany(mappedBy = "user")
-    private List<UserStock> stocks = new ArrayList<>();
 }

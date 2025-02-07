@@ -1,30 +1,50 @@
 package org.example.finalproject.security;
 
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.example.finalproject.config.JwtFilter;
-import org.example.finalproject.service.JwtService;
-import org.example.finalproject.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.example.finalproject.config.CustomAuthenticationEntryPoint;
+import org.example.finalproject.constants.EndPointPaths;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
-import org.springframework.web.servlet.HandlerExceptionResolver;
-
-import java.io.IOException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@RequiredArgsConstructor
+@TestConfiguration
 @Profile("component-test")
-@Primary
-public class JwtFilterForTests extends JwtFilter {
+public class SecurityConfigForTests {
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
-    public JwtFilterForTests(JwtService jwtService, UserService userService, HandlerExceptionResolver handlerExceptionResolver) {
-        super(jwtService, userService, handlerExceptionResolver);
+    private static final String[] PERMIT_ALL_PATHS = {
+            EndPointPaths.API_USER_LOGIN,
+            EndPointPaths.API_USER_REGISTER,
+            EndPointPaths.SWAGGER_UI,
+            EndPointPaths.API_DOCS
+    };
+
+    @Bean
+    @Primary
+    public SecurityFilterChain securityFilterChainForTests(HttpSecurity http) throws Exception {
+        http.securityMatcher("/**")
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(authorizeRequests ->
+                        authorizeRequests.requestMatchers(PERMIT_ALL_PATHS).permitAll()
+                                .anyRequest().authenticated())
+                .exceptionHandling(exceptionHandler ->
+                        exceptionHandler.authenticationEntryPoint(customAuthenticationEntryPoint))
+                .httpBasic(Customizer.withDefaults());
+        return http.build();
+
     }
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        super.doFilterInternal(request, response, filterChain);
-    }
 }

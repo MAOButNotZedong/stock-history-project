@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/stocks_db
+    url: testcontainer
     username: postgres
     password: postgres
 
@@ -12,3 +12,6 @@ security:
 
 bcrypt:
   strength: 14
+
+polygon:
+  token: ""

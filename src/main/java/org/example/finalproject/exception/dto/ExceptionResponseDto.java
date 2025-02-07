@@ -1,18 +1,23 @@
-package org.example.finalproject.exception;
+package org.example.finalproject.exception.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Schema(description = "Dto с информацией об ошибке")
 public class ExceptionResponseDto {
+    @Schema(example = "Unauthorized")
     private String status;
-    private List<ExceptionMessage> messages;
+    @Schema(example = "...BadCredentialsException.class")
+    private String exceptionType;
+    @Schema(example = "Email or password not valid")
+    private String message;
+
 
 }

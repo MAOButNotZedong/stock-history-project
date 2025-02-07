@@ -1,7 +1,7 @@
-package org.example.finalproject.service.user;
+package org.example.finalproject.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.finalproject.dao.UserDao;
+import org.example.finalproject.dao.UserRepository;
 import org.example.finalproject.dto.user.UserRegistrationDto;
 import org.example.finalproject.exception.UserWithEmailAlreadyExistsException;
 import org.example.finalproject.model.UserPrincipal;
@@ -20,11 +20,11 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
-    private final UserDao userDao;
+    private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCrypt;
 
     public Optional<User> getUserByEmail(String email) {
-        return userDao.getUserByEmail(email);
+        return userRepository.getUserByEmail(email);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class UserService implements UserDetailsService {
                     .username(userDto.getUsername())
                     .password(bCrypt.encode(userDto.getPassword()))
                     .build();
-            userDao.save(newUser);
+            userRepository.save(newUser);
 
         } catch (OptimisticLockingFailureException e) {
             if (getUserByEmail(userDto.getEmail()).isPresent()) {
@@ -55,8 +55,8 @@ public class UserService implements UserDetailsService {
 
     public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userEmail = ((UserPrincipal) authentication.getPrincipal()).getUsername();
-        return userDao.getUserByEmail(userEmail).orElseThrow(() -> new UserWithEmailAlreadyExistsException(userEmail));
+        String userEmail = ((UserDetails) authentication.getPrincipal()).getUsername();
+        return userRepository.getUserByEmail(userEmail).orElseThrow(() -> new UserWithEmailAlreadyExistsException(userEmail));
     }
 }
 

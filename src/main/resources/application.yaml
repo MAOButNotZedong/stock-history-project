@@ -1,12 +1,37 @@
-spring.application.name=final-project
+server:
+  port: ${APP_PORT:8080}
 
-spring.datasource.url=jdbc:postgresql://localhost:5432/stocks_db
-spring.datasource.username=postgres
-spring.datasource.password=postgres
-spring.datasource.driver-class-name=org.postgresql.Driver
+spring:
+  application:
+    name: final-project
+  profiles:
+    active: ${APP_PROFILE:production}
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/stocks_db}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+#    open-in-view: false
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/db.changelog-master.yaml
 
-spring.jpa.hibernate.ddl-auto=validate
-spring.jpa.show-sql=true
+security:
+  jwt:
+    secret-key: ${SECRET_KEY}
+    expiration-time: 1_200_000 # 20 minutes (20 * 60 * 1000)
 
-security.jwt.token-key=${}
-security.jwt.
+springdoc:
+  api-docs:
+    path: /api-docs
+
+bcrypt:
+  strength: 14
+
+polygon:
+  token: ${POLYGON_TOKEN}
+
+
