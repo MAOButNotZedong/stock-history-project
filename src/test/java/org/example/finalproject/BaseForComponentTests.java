@@ -2,24 +2,19 @@ package org.example.finalproject;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-import org.example.finalproject.config.SecurityConfig;
 import org.example.finalproject.dao.StockRepository;
 import org.example.finalproject.dao.TickerRepository;
 import org.example.finalproject.dao.UserRepository;
 import org.example.finalproject.dao.UserStockRepository;
-import org.example.finalproject.security.SecurityConfigForTests;
 import org.example.finalproject.service.stock.StockFacade;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Import;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -52,9 +47,6 @@ public class BaseForComponentTests {
 
     @Autowired
     protected ObjectMapper objectMapper;
-
-    @Autowired
-    protected StockFacade stockFacade;
 
     protected static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:17.0");
 

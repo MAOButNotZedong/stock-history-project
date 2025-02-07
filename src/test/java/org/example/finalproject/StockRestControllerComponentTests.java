@@ -1,23 +1,21 @@
 package org.example.finalproject;
 
 import org.example.finalproject.constants.EndPointPaths;
-import org.example.finalproject.controller.StockRestController;
-import org.example.finalproject.dto.stock.HistoryResponseDto;
 import org.example.finalproject.dto.stock.PolygonResultDto;
 import org.example.finalproject.dto.stock.StockSaveRequestDto;
 import org.example.finalproject.dto.user.UserRegistrationDto;
 import org.example.finalproject.model.entity.Stock;
 import org.example.finalproject.model.entity.User;
-import org.example.finalproject.security.SecurityConfigForTests;
 import org.example.finalproject.service.UserService;
 import org.example.finalproject.service.polygon.IntegrationService;
 import org.example.finalproject.service.polygon.getstrategy.AllStockGettingStrategy;
 import org.example.finalproject.service.polygon.getstrategy.DefaultStockGettingStrategy;
-import org.example.finalproject.service.stock.StockFacade;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,7 +28,6 @@ import java.io.File;
 import java.time.LocalDate;
 import java.util.List;
 
-@Import(SecurityConfigForTests.class)
 public class StockRestControllerComponentTests extends BaseForComponentTests {
 
     static final String USER_EMAIL = "al@gmail.com";
