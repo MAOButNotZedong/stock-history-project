@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/stocks_db
+    username: postgres
+    password: postgres
+
+security:
+  jwt:
+    #key only for tests
+    secret-key: c557f0dac6d0d01cac8cdbdccd27b354f85a8c902c877ded2cfbb2ee6cbfd942668c105a5f9c4e11adf64b2b835d05e651cc79a19f399183da63be70b9e1f68d
+    expiration-time: 1_200_000 # 20 minutes (20 * 60 * 1000)
+
+bcrypt:
+  strength: 14
