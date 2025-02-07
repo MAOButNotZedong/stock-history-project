@@ -6,7 +6,6 @@ import org.example.finalproject.dao.StockRepository;
 import org.example.finalproject.dao.TickerRepository;
 import org.example.finalproject.dao.UserRepository;
 import org.example.finalproject.dao.UserStockRepository;
-import org.example.finalproject.service.stock.StockFacade;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
