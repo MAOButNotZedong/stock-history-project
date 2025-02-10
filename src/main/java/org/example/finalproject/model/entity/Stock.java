@@ -27,10 +27,12 @@ import java.util.Set;
 public class Stock {
 
     public static final String UNIQUE_CONSTRAINT_NAME = "stocks_ticker_id_and_date";
+    public static final String STOCKS_ID_SEQ = "stocks_id_seq";
+    public static final int ALLOCATION_SIZE = 30;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "stocks_id_seq")
-    @SequenceGenerator(name = "stocks_id_seq", allocationSize = 30)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = STOCKS_ID_SEQ)
+    @SequenceGenerator(name = STOCKS_ID_SEQ, allocationSize = ALLOCATION_SIZE)
     @JsonIgnore
     private Integer id;
 
