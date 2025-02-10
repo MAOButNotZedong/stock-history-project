@@ -2,7 +2,7 @@ package org.example.finalproject.service.stock;
 
 import lombok.RequiredArgsConstructor;
 import org.example.finalproject.dao.StockRepository;
-import org.example.finalproject.dto.MutatedList;
+import org.example.finalproject.dto.NewAndExistingStocksPair;
 import org.example.finalproject.dto.stock.StockSaveRequestDto;
 import org.example.finalproject.model.entity.Stock;
 import org.springframework.stereotype.Service;
@@ -18,10 +18,9 @@ public class SerializableSaveService {
     private final ExcludeService excludeService;
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public boolean excludeAndSaveAllStock(StockSaveRequestDto stock, List<Stock> stocks) {
-        MutatedList<List<Stock>, Boolean> stocks1 = excludeService.excludeExistingStocks(stock, stocks);
-        System.out.println(stocks1.list());
-        stockRepository.saveAll(stocks1.list());
-        return stocks1.isChanged();
+    public NewAndExistingStocksPair<List<Stock>, List<Stock>> excludeAndSaveAllStock(StockSaveRequestDto stock, List<Stock> stocks) {
+        NewAndExistingStocksPair<List<Stock>, List<Stock>> stocks1 = excludeService.excludeExistingStocks(stock, stocks);
+        stockRepository.saveAll(stocks1.newStocks());
+        return stocks1;
     }
 }
