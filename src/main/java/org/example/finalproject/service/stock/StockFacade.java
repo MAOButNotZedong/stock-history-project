@@ -10,7 +10,6 @@ import org.example.finalproject.service.DatePreparationService;
 import org.example.finalproject.service.TickerValidationService;
 import org.example.finalproject.service.polygon.getstrategy.StockGettingStrategy;
 import org.example.finalproject.service.polygon.getstrategy.StockGettingStrategySelector;
-import org.example.finalproject.service.stock.strategy.SavingExistingStockStrategy;
 import org.example.finalproject.service.stock.strategy.SavingNewAndExistingStockStrategy;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +24,7 @@ public class StockFacade {
     private final StockGettingStrategySelector selector;
     private final DatePreparationService datePreparationService;
     private final GetStockService getStockService;
-    private final SavingExistingStockStrategy savingExistingStockStrategy;
+    private final SavingExistingStockService savingExistingStockService;
     private final SavingNewAndExistingStockStrategy savingNewAndExistingStockStrategy;
 
     public void saveStock(@NotNull StockSaveRequestDto stock) {
@@ -37,9 +36,9 @@ public class StockFacade {
         PolygonResultDto polygonResultDto = strategy.getStock(stock, existingDates);
         if (polygonResultDto != null) {
             List<Stock> newStocks = polygonResultDto.getStocks();
-            savingNewAndExistingStockStrategy.saveAll(stock, newStocks, existingStocks);
+            savingNewAndExistingStockStrategy.saveAll(stock, newStocks);
         } else {
-            savingExistingStockStrategy.saveAll(existingStocks);
+            savingExistingStockService.saveAll(existingStocks);
         }
     }
 
