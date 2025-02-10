@@ -54,7 +54,7 @@ public class StockNativeQueryRepository {
 
         while (true) {
             List<Stock> stocksCopy = stocks.subList(startIndex, endIndex);
-            int lastSequenceValue = stockRepository.getLastSequenceValue() + 1;
+            int lastSequenceValue = stockRepository.getNextSequenceValue();
             for (Stock stock : stocksCopy) {
                 stock.setId(lastSequenceValue);
                 lastSequenceValue++;

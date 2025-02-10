@@ -31,7 +31,6 @@ public class ConcurrentSavingNewAndExistingStockStrategy implements SavingNewAnd
         List<Stock> newStocks2 = stocksPair.newStocks();
         addToStockService.addUserToStocks(newStocks2);
         stockNativeQueryRepository.saveAll(newStocks2);
-
         List<Stock> existingStocks = getStockService.getExistingStocks(stock);
         savingExistingStockService.saveAll(existingStocks);
     }
